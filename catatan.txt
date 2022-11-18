@@ -1,0 +1,140 @@
+1. Input User
+INSERT INTO `tedx`.`users` (`email`, `type`, `password`) 
+VALUES ('peserta@gmail.com', 'peserta', '$2y$10$eU/fXO7XOS9b5w7vkkZmu.LXYt2PqNMG7EYPlfrwBFJDiy1t9H1gy');
+
+2. Input Peserta
+INSERT INTO `tedx`.`pesertas` (`nama`, `fakultas`, `angkatan`, `user_id`) 
+VALUES ('peserta', 'vokasi', '20', '5');
+
+3. Input EVent
+INSERT INTO `tedx`.`events` (`nama_event`) VALUES ('Mainevent');
+INSERT INTO `tedx`.`events` (`nama_event`) VALUES ('Subevent');
+
+NOTE : Ada salah di table Pendaftaran
+ga pake idpembayaran
+
+4. Tambah status di pendaftarans
+
+5. Input Pendaftaran
+INSERT INTO `tedx`.`pendaftarans` (`status`, `event_id`, `peserta_id`) 
+VALUES ('0', '2', '2');
+
+STatus Pendaftaran : 
+0 : Unverified (default)
+1 : Verified (verified)
+2. Berkas Tidak Lengkap
+
+Tugas Baru
+
+GAMAS
+b. Update status
+c. Select detail dari pendaftarans
+
+ILHAM
+a. Select data pendaftaran where idvent = 2 atau yg subevents 
+d. Hitung jumlah pendaftaran dengan count di dashboard
+
+
+//Briefing BE 24/10
+Ilham
+1. Perbaiki Menu Navbar
+Sebelum Login :
+a. Home /
+b. Login
+c. Register
+
+Sesudah Login :
+a. Home (/)
+b. dashboard (/home)
+c. Logout
+
+2. Pembatasan Session
+A. Peserta/user yang belum login gapunya akses ke 
+http://127.0.0.1:8000/home
+http://127.0.0.1:8000/regis-lfls (form Daftar)
+dan sebagainya
+
+B. Admin yang belum login juga tidak bisa akses dashboard
+http://127.0.0.1:8000/dashboard
+http://127.0.0.1:8000/subevents
+
+5. Select Data Pendaftaran di halaman user sesuai usernya  -> Nama, Jenis Pendaftaran, cp, drive Status
+(/status)
+
+6. Select Email Peserta di header setiap halaman sesuai usernya
+
+
+
+Gamas
+3. (DONE) Perbaiki Login Admin jadi hanya yang rolenya admin yang bisa login di admin
+atau di http://127.0.0.1:8000/login
+
+
+4. (DONE) Input Data Peserta dan Pendaftaran dari halaman http://127.0.0.1:8000/regis-lfls
+@if(pertama daftar)
+    nama
+    Nim
+    fakultas
+    angkatan 
+    alamat
+    CP
+    IG
+    link gdrive
+@elseif(Kalo daftar kedua) -->Jadi misal dia nih salah daftar/berkas bisa daftar lagi (tapi ga nginputin 
+nama/nim dll soalnya namanya ditable peserta)
+    CP
+    IG
+    link gdrive
+
+7. Karena Datanya berubah maka data di admin dashboard juga berubah 
+
+
+
+
+INSERT INTO `tedx`.`pesertas` (`nama`, `nim`, `fakultas`, `angkatan`, `alamat`) 
+VALUES ('andika', '1520', 'vokasi', '20', 'surabaya');
+
+
+Conton inject event
+INSERT INTO `tedx`.`events` (`nama_event`) VALUES ('Mainevent');
+INSERT INTO `tedx`.`events` (`nama_event`) VALUES ('Subevent');
+
+Contoh Inject Pendaftaran
+INSERT INTO `tedx`.`pendaftarans` (`kontak`, `drive`, `status`, `event_id`, `peserta_id`) 
+VALUES ('data kontak', 'Data drive', '0', '2', '1');
+
+
+
+BRIEFING TGL 5 - 11
+Migrate ulang karena aku naruh atribute baru di pembayaran.
+Input data pendaftaran main event Sudah tak buat.
+jadi coba input dulu yang di card mainEvent yang cooming soon.
+
+ILHAM
+1. route /status atau halaman resources\views\peserta\status.blade.php
+Memperbaiki select untuk subevent supaya hanya pendaftaran yg id_event nya 2 yg tampin di subevent
+NOTE : Yang maint event udah bener udah tak buat
+
+2. Untuk Admin menu pendaftaran maint event 
+a. Select sesuai kolom yang udah ku tulis (User join peserta join pendaftaran)
+[NO, ID_PENDAFTARAN, NAMA, EMAIL, KONTAK, FAKULTAS, NIM TANGGAL PENDAFTARAN]
+b. Buat fitur ubah status_pendaftaran kayak sub event
+STATUS PENDAFTARAN
+0 = (baru masuk), belum datang
+1 = sudah datang
+Khusus ini Updatenya pake php yaa, Jangan pake js/json soalnya nanti di hari H proses rendernya penting
+https://www.fundaofwebit.com/index.php/laravel-8/how-to-edit-update-data-in-laravel
+
+
+GAMAS
+3. untuk admin menu pembayaran maint event (User join peserta join pendaftaran join pembayaran)
+a. Select sesuai kolom yang udah ku tulis
+b. Buat fitur ubah status_pembayaran kayak sub event
+STATUS PEMBAYARANNYA
+0 = Unverified
+1 = Verified
+2 = Pembayaran Salah
+
+4. Menu print excel untuk pendaftaran main event bisa select semua kolom terkait
+id Pembayaran, email, nama, kontak, umur, instittue, fakultas, nim, angkatan, metode pembayaran, tgl_pembayaran
+
